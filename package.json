@@ -4,8 +4,8 @@
 	"private": true,
 	"scripts": {
 		"start": "node ./bin/www",
-		"dev": "nodemon ./bin/www",
-		"compile": "tsc -w",
+		"dev": "node ./bin/www",
+		"compile": "tsc",
 		"test": "jest dist/utils/mongoose-model-tests/crud.test.js --runInBand --detectOpenHandles"
 	},
 	"jest": {

@@ -97,7 +97,7 @@ router.get("/dashboard", auth, async (req: Request | any, res: Response) => {
 
 		const totalPages = Math.ceil(count / limit); // calculate total number of pages
 
-		return res.render("Dashboard", {
+		return res.render("dashboard", {
 			movielist: movies,
 			totalPages,
 			currentPage: page,
@@ -174,7 +174,7 @@ router.post("/update/:id", async (req: Request, res: Response) => {
 		}
 		const movielist = await Movie.findById(id);
 		if (!movielist) {
-			return res.render("Dashboard", { message: "Movie not found" });
+			return res.render("dashboard", { message: "Movie not found" });
 		}
 		movielist.title = title;
 		movielist.description = description;
