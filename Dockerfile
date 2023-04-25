@@ -1,20 +1,44 @@
-
-FROM node:19
+FROM node:19-alpine
 
 WORKDIR /app
 
-COPY . .
-
-COPY package.json yarn.lock ./
+COPY package*.json yarn.lock ./
 
 RUN yarn
 
-RUN yarn tsc
+COPY . .
 
-ENV PORT=3000
+RUN npx tsc
 
-CMD ["yarn", "start"]
+RUN apk add --no-cache mongodb-tools
 
-EXPOSE $PORT
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+ENV MONGODB_URI=mongodb+srv://Tozee:QfZtjQFZh03jNyH1@cluster0.fzado2a.mongodb.net/zeeflix
+ENV JWT_SECRET=zeeFlixapp
+
+USER appuser
+
+CMD ["node", "bin/www"]
+
+EXPOSE 3000
+
+# FROM node:19
+
+# WORKDIR /app
+
+# COPY . .
+
+# COPY package.json yarn.lock ./
+
+# RUN yarn
+
+# RUN yarn tsc
+
+# ENV PORT=3000
+
+# CMD ["yarn", "start"]
+
+# EXPOSE $PORT
 
 
