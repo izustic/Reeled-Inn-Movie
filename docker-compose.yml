@@ -17,7 +17,7 @@ services:
   app:
     build: .
     ports:
-      - 3000:3000
+      - 5020:3000
     depends_on:
       - db
     env_file:
