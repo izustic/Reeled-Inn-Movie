@@ -11,17 +11,17 @@ const router = express_1.default.Router();
 // Render All Movies in Database
 router.get("/", async (req, res, next) => {
     try {
-        console.log("ALL MOVIES IN DB FETCHED NON USERS!!!!");
-        const page = parseInt(req.query.page, 10) || 1; // default to first page
-        const limit = 8; // number of results per page
-        const skip = (page - 1) * limit; // calculate offset based on page number
+        // console.log("ALL MOVIES IN DB FETCHED NON USERS!!!!");
+        const page = parseInt(req.query.page, 10) || 1;
+        const limit = 8;
+        const skip = (page - 1) * limit;
         const count = await movieModel_1.default.countDocuments({});
         const movies = await movieModel_1.default.find({})
             .limit(limit)
             .skip(skip)
             .sort({ createdAt: -1 })
             .exec();
-        const totalPages = Math.ceil(count / limit); // calculate total number of pages
+        const totalPages = Math.ceil(count / limit);
         return res.render("home", {
             movielist: movies,
             totalPages,
@@ -36,17 +36,17 @@ router.get("/", async (req, res, next) => {
 //Render All Movies in Database for User Home Page
 router.get("/userhome", async (req, res, next) => {
     try {
-        console.log("ALL MOVIES IN DB FETCHED SIGNED USERS!!!!");
-        const page = parseInt(req.query.page, 10) || 1; // default to first page
-        const limit = 8; // number of results per page
-        const skip = (page - 1) * limit; // calculate offset based on page number
+        // console.log("ALL MOVIES IN DB FETCHED SIGNED USERS!!!!");
+        const page = parseInt(req.query.page, 10) || 1;
+        const limit = 8;
+        const skip = (page - 1) * limit;
         const count = await movieModel_1.default.countDocuments({});
         const movies = await movieModel_1.default.find({})
             .limit(limit)
             .skip(skip)
             .sort({ createdAt: -1 })
             .exec();
-        const totalPages = Math.ceil(count / limit); // calculate total number of pages
+        const totalPages = Math.ceil(count / limit);
         return res.render("userHome", {
             movielist: movies,
             totalPages,
@@ -71,17 +71,17 @@ router.get("/login", (req, res, next) => {
 router.get("/dashboard", auth_1.auth, async (req, res) => {
     try {
         const { id } = req.user;
-        const page = parseInt(req.query.page, 10) || 1; // default to first page
-        const limit = 8; // number of results per page
-        const skip = (page - 1) * limit; // calculate offset based on page number
+        const page = parseInt(req.query.page, 10) || 1;
+        const limit = 8;
+        const skip = (page - 1) * limit;
         const count = await movieModel_1.default.countDocuments({ userId: id });
         const movies = await movieModel_1.default.find({ userId: id })
             .limit(limit)
             .skip(skip)
             .sort({ createdAt: -1 })
             .exec();
-        const totalPages = Math.ceil(count / limit); // calculate total number of pages
-        return res.render("Dashboard", {
+        const totalPages = Math.ceil(count / limit);
+        return res.render("dashboard", {
             movielist: movies,
             totalPages,
             currentPage: page,
@@ -96,7 +96,7 @@ router.get("/dashboard", auth_1.auth, async (req, res) => {
 router.post("/dashboard", auth_1.auth, async (req, res) => {
     try {
         const verified = req.user;
-        // Validate with Joi. Ensure you're getting string for all the inputs
+        // Validate with Joi.
         const validationResult = utils_1.createMovieSchema.validate(req.body, utils_1.options);
         if (validationResult.error) {
             return res
@@ -140,11 +140,10 @@ router.get("/dashboard/:id", async (req, res) => {
 //Update Movie
 router.post("/update/:id", async (req, res) => {
     try {
-        console.log("MOVIE UPDATED!!!");
+        // console.log("MOVIE UPDATED!!!");
         const { title, description, image, price } = req.body;
-        const { id } = req.params; // extract id from the URL
-        const validationResult = utils_1.updateMovieSchema.validate({ title, description, image, price }, // pass only the relevant properties to the schema validator
-        utils_1.options);
+        const { id } = req.params;
+        const validationResult = utils_1.updateMovieSchema.validate({ title, description, image, price }, utils_1.options);
         if (validationResult.error) {
             return res
                 .status(400)
@@ -152,7 +151,7 @@ router.post("/update/:id", async (req, res) => {
         }
         const movielist = await movieModel_1.default.findById(id);
         if (!movielist) {
-            return res.render("Dashboard", { message: "Movie not found" });
+            return res.render("dashboard", { message: "Movie not found" });
         }
         movielist.title = title;
         movielist.description = description;

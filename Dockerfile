@@ -1,4 +1,4 @@
-FROM node:19-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ RUN yarn
 
 COPY . .
 
-RUN yarn compile
+RUN npx tsc
 
 RUN apk add --no-cache --virtual .build-deps gcc musl-dev openssl-dev && \
     apk add --no-cache mongodb-tools && \
