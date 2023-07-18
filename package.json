@@ -26,7 +26,7 @@
 		"joi": "^17.9.1",
 		"jsonwebtoken": "^9.0.0",
 		"mongodb-memory-server": "^8.12.2",
-		"mongoose": "^7.0.4",
+		"mongoose": "^7.3.4",
 		"morgan": "~1.9.1",
 		"nodemon": "^2.0.21",
 		"sequelize": "^6.29.3",
